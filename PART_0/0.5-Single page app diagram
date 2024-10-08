@@ -21,7 +21,7 @@ sequenceDiagram
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
     activate server
-    server-->>browser: [{ "content": "HTML is easy", "date": "2023-01-01" }, ...]
+    server-->>browser: Updated JSON with the new note [{ "content": "What a time to be alive", "date": "2024-10-04T14:10:04.367Z" }]
     deactivate server
 
     Note right of browser: The browser renders the notes dynamically using the fetched data
