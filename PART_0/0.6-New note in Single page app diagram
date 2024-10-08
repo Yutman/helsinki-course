@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: User writes a note and clicks the "Save" button
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa (with note content)
+    activate server
+    server-->>browser: Response (JSON) { "message": "Note saved" }
+    deactivate server
+
+    Note right of browser: The browser updates its internal state with the new note
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: Updated JSON with the new note [{ "content": "SPA note", "date": "2024-10-02" }, ...]
+    deactivate server
+
+    Note right of browser: The browser dynamically renders the new list of notes, including the new one, without reloading the page
