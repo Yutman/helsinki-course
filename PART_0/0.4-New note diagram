@@ -1,0 +1,42 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: User enters a note and clicks the "Save" button
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
+    server-->>browser: Redirect (HTTP 302) to /exampleapp/notes
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: the JavaScript file
+    deactivate server
+
+    Note right of browser: The browser starts executing the JavaScript code that fetches the updated JSON from the server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: Updated JSON with the new note [{ "content": "What a time to be alive", "date": "2024-10-02T11:05:03.337Z" }]
+    deactivate server
+
+    Note right of browser: The browser executes the callback function that renders all notes, including the new one.
+
+
+User Interaction: I write a note and click the "Save" button.
+POST Request: The browser sends a POST request to the server with the note content.
+Server Response (Redirect): The server processes the note and responds with an HTTP 302 redirect to /exampleapp/notes.
+GET Requests for Resources: After the redirect, the browser requests the page and other associated resources.
+Fetching Data: The JavaScript code in the browser makes a GET request to fetch the updated data.json, which now contains the new note.
+Rendering Notes: The browser executes a callback function that updates the UI, displaying the new note.
